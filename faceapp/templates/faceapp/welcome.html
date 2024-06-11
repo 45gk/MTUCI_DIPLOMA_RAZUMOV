@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FaceAppAccess - Главная</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .navigation-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .navigation-button:hover {
+            background-color: #45a049;
+        }
+
+        .text{
+            font-family: Arial, sans-serif;
+            padding: 8px;
+            text-align: center;
+            font-size: 5vh;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>FaceAppAccess - Главная</h1>
+    </div>
+    <div class="text">Добро пожаловать на сервис доступа по биометрии</div>
+    <div class="navigation-button" onclick="goToRegistration()">Регистрация</div>
+    <div class="navigation-button" onclick="goToLogin()">Вход</div>
+
+    <script>
+        function goToRegistration() {
+            // Здесь вы можете реализовать переход на страницу регистрации
+            window.location.href = '/regi/';
+        }
+
+        function goToLogin() {
+            // Здесь вы можете реализовать переход на страницу входа
+            window.location.href = '/login_view/';
+        }
+    </script>
+</body>
+</html>
+
+
+
+

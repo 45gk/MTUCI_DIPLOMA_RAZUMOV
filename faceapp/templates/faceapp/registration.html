@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FaceAppAccess - Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .profile-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .profile-button:hover {
+            background-color: #45a049;
+        }
+
+        .header h1 {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .back-button {
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin: 20px;
+            background: url('faceAccess/back-button.png') no-repeat center;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .navigation-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .navigation-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-button" onclick="goBack()"><</div>
+        <h1>FaceAppAccess - Регистрация</h1>
+    </div>
+    <form id="registrationForm">
+        <label for="login">Логин:</label><br>
+        <input type="text" id="login" name="login" required><br>
+        <label for="name">Имя:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        <label for="biograghy">Биография:</label><br>
+        <input type="text" id="biograghy" name="biograghy" required><br>
+        <label for="my_skills">Мои навыки:</label><br>
+        <input type="text" id="my_skills" name="my_skills" required><br>
+        <video id="webcam" autoplay></video>
+        <canvas id="snapshot" style="display:none;"></canvas>
+        <input type="hidden" id="snapshotData" name="photo">
+        <div class="navigation-button" onclick="takeSnapshot()">Сделать фото</div>
+        <input class="navigation-button" type="submit" value="Зарегистрироваться">
+    </form>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('snapshot');
+        const context = canvas.getContext('2d');
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (error) {
+                    console.log("Something went wrong!");
+                });
+        }
+
+        function takeSnapshot() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(function(blob) {
+                let file = new File([blob], "snapshot.jpg", {type: "image/jpeg"});
+                let formData = new FormData(document.getElementById('registrationForm'));
+                formData.append('photo', file);
+
+                fetch('/registration/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.url) {
+                        let currentUrl = window.location.href;
+                        let newUrl = currentUrl.replace('regi/', data.url);
+                        window.location.href = newUrl;
+                    } else {
+                        console.error('Error:', data.error || 'No URL provided in response');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }, 'image/jpeg');
+        }
+
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            takeSnapshot();
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

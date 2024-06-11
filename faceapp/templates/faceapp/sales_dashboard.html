@@ -1,0 +1,151 @@
+<!-- templates/faceapp/sales_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Dashboard</title>
+    <style>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .button:hover {background-color: #3e8e41}
+
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .chart-container {
+            margin-top: 20px;
+        }
+    .header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .profile-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .profile-button:hover {
+            background-color: #45a049;
+        }
+
+        .header h1 {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .back-button{
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin: 20px;
+            background: url('faceAccess/back-button.png') no-repeat center;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+        .navigation-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .navigation-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-button" onclick="goBack()"><</div>
+        <h1>FaceAppAccess - Главная</h1>
+    </div>
+    <h1>Sales Dashboard</h1>
+
+    <h2>Total Sales: {{ total_sales }}</h2>
+
+    <div class="chart-container">
+        <h3>Sales by Product</h3>
+        <img src="data:image/png;base64,{{ product_sales_image }}" alt="Sales by Product">
+    </div>
+
+    <div class="chart-container">
+        <h3>Sales by Position</h3>
+        <img src="data:image/png;base64,{{ position_sales_image }}" alt="Sales by Position">
+    </div>
+
+    <div class="chart-container">
+        <h3>Sales by Customer</h3>
+        <img src="data:image/png;base64,{{ customer_sales_image }}" alt="Sales by Customer">
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button class="button" onclick="goPositions()">Позиции</button>
+        <button class="button" onclick="goProducts()">Продукты</button>
+        <button class="button" onclick="goCustomers()">Покупатели</button>
+        <button class="button" onclick="goSales()">Продажи</button>
+    </div>
+    <script>
+        let currentUrl = window.location.href;
+        let newUrl_positions = currentUrl.replace('/sales_dashboard/', '/positions/');
+        let newUrl_products = currentUrl.replace('/sales_dashboard/', '/products/');
+        let newUrl_customers = currentUrl.replace('/sales_dashboard/', '/customers/');
+        let newUrl_sales = currentUrl.replace('/sales_dashboard/', '/sales/');
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function goPositions() {
+            window.location.href = newUrl_positions;
+        }
+
+        function goProducts() {
+            window.location.href = newUrl_products;
+        }
+
+        function goCustomers() {
+            window.location.href = newUrl_customers;
+        }
+
+        function goSales() {
+            window.location.href = newUrl_sales;
+        }
+    </script>
+</body>
+</html>

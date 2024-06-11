@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Профиль</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .profile-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .profile-button:hover {
+            background-color: #45a049;
+        }
+
+        .header h1 {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .back-button{
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin: 20px;
+            background: url('faceAccess/back-button.png') no-repeat center;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+        .navigation-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .navigation-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-button" onclick="goBack()"><</div>
+        <h1>FaceAppAccess - Главная</h1>
+    </div>
+
+    <h1>Профиль пользователя {{ name }}</h1>
+    <p>Логин: {{ username }}</p>
+    <p>Файлов в папке: {{ total_files }}</p>
+    <p>Биография: {{ biograghy }}</p>
+    <p>Мои навыки: {{ my_skills }}</p>
+    <div class="navigation-button" onclick="editProf()">Редактировать профиль</div>
+    <div class="navigation-button" onclick="catalogues()">Посмотреть каталог</div>
+    <div class="navigation-button" onclick="cataloguesAnalytic()">Аналитика каталога</div>
+    <div class="navigation-button" onclick="sales()">Аналитика продаж</div>
+    <div class="navigation-button" onclick="logout()">Выйти</div>
+    <script>
+        let currentUrl = window.location.href;
+        let newUrl_folders = currentUrl.replace('/user_main/', '/user_folder/');
+        let newUrl_prof = currentUrl.replace('/user_main/', '/profile/');
+        let newUrl_sales = currentUrl.replace('/user_main/', '/sales_dashboard/');
+        let newUrl_analyze = currentUrl.replace('/user_main/', '/folder_analytics/');
+        let newUrl_logout = currentUrl.replace('/user_main/', '/logout/');
+
+        function editProf() {
+            // Здесь вы можете реализовать переход в профиль пользователя
+            window.location.href = newUrl_prof;
+        }
+
+        function goBack(){
+            window.location.href = '';
+        }
+        function sales(){
+            window.location.href = newUrl_sales;
+        }
+
+        function catalogues(){
+            window.location.href = newUrl_folders;
+        }
+
+        function logout(){
+            window.location.href = newUrl_logout;
+        }
+        function cataloguesAnalytic(){
+            window.location.href = newUrl_analyze;
+        }
+
+    </script>
+</body>
+</html>

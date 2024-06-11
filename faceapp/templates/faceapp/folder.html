@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Contents</title>
+    <style>
+        .directory {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .directory-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .directory-item span {
+            margin-right: 10px;
+        }
+        .directory-item button {
+            margin-left: 10px;
+        }
+        .add-button, .delete-button {
+            margin-left: 10px;
+        }
+    .header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .profile-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .profile-button:hover {
+            background-color: #45a049;
+        }
+
+        .header h1 {
+            flex-grow: 1;
+            text-align: center;
+        }
+        .back-button {
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin: 20px;
+            background: url('faceAccess/back-button.png') no-repeat center;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .navigation-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .navigation-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-button" onclick="goBack()"><</div>
+        <h1>FaceAppAccess - Каталог</h1>
+    </div>
+    <h1>Содержимое каталога {{ username }}</h1>
+    <ul class="directory">
+        {% for item in items %}
+            <li class="directory-item">
+                {% if item.is_dir %}
+                    <a href="{% url 'user_folder' username %}">{{ item.name }}/</a>
+                {% else %}
+                    <span>{{ item.name }}</span>
+                    <form method="POST" action="{% url 'delete_file' username item.name %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="{% url 'add_file' username %}">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Enter file name" required>
+        <button type="submit" class="add-button">Add File</button>
+    </form>
+
+    <form method="POST" action="{% url 'add_folder' username %}">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Enter folder name" required>
+        <button type="submit" class="add-button">Add Folder</button>
+    </form>
+
+    <form method="POST" action="{% url 'upload_file' username %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" required>
+        <button type="submit" class="add-button">Upload File</button>
+    </form>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

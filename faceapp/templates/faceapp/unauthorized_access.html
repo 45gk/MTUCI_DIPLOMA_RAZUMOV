@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unauthorized Access</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            text-align: center;
+        }
+        .button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Доступ запрещен</h1>
+        <p>У вас нет прав для доступа к этому ресурсу.</p>
+        <div class="button" onclick="goMain()">На главную</div>
+    </div>
+
+    <script>
+        let currentUrl = window.location.href;
+        let newUrl_main = currentUrl.replace('/unauthorized_access/', '/');
+
+        function goMain(){
+            window.location.href = newUrl_main;
+        }
+    </script>
+</body>
+</html>

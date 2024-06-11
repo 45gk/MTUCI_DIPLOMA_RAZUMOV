@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffcccc;
+        }
+        .header {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .header h1 {
+            flex-grow: 1;
+            text-align: center;
+            color: #cc0000;
+        }
+        .content {
+            margin: 20px;
+            text-align: center;
+            color: #cc0000;
+        }
+        .button{
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #cc0000;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #990000;
+        }
+    </style>
+    <title>Лицо не найдено</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Лицо на фото не найдено</h1>
+    </div>
+    <div class="content">
+        <p>К сожалению, мы не смогли найти лицо на предоставленном вами фото. Пожалуйста, попробуйте загрузить другое фото.</p>
+        <div class="button" onclick="goToLogin()">Авторизоваться</div>
+        <div class="button" onclick="goToRegister()">Зарегистрироваться</div>
+    </div>
+    <script>
+        function goToLogin(){
+            window.location.href = '/login_view';
+        }
+        function goToRegister(){
+            window.location.href = '/regi';
+        }
+    </script>
+</body>
+</html>

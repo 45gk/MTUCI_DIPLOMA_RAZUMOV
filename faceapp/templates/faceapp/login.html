@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FaceAppAccess</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+        .biometric-button {
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .biometric-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-button" onclick="goBack()">Перейти в профиль</div>
+        <h1>FaceAppAccess - Главная</h1>
+    </div>
+    <video id="webcam" autoplay></video>
+    <canvas id="snapshot" style="display:none;"></canvas>
+    <div class="biometric-button" onclick="takeSnapshot()">Войти по биометрии</div>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('snapshot');
+        const context = canvas.getContext('2d');
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (error) {
+                    console.log("Something went wrong!");
+                });
+        }
+
+        function takeSnapshot() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    let snapshotData = canvas.toDataURL('image/png');
+    let blob = dataURLToBlob(snapshotData);
+
+    let formData = new FormData();
+    formData.append('image', blob);
+
+    fetch('/login/', {
+    method: 'POST',
+    body: formData
+})
+.then(response => response.json())
+.then(data => {
+
+    if (data.url) {
+        let currentUrl = window.location.href;
+        let newUrl = currentUrl.replace('login_view/', data.url);
+        window.location.href = newUrl;
+    } else {
+        console.error('Error: No URL provided in response');
+    }
+})
+.catch(error => console.error('Error:', error));
+
+}
+
+function dataURLToBlob(dataURL) {
+    let parts = dataURL.split(';base64,');
+    let contentType = parts[0].split(":")[1];
+    let raw = window.atob(parts[1]);
+    let rawLength = raw.length;
+    let uInt8Array = new Uint8Array(rawLength);
+
+    for (let i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], {type: contentType});
+    }
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

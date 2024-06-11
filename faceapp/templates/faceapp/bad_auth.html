@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffcccc;
+        }
+        .header {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .header h1 {
+            flex-grow: 1;
+            text-align: center;
+            color: #cc0000;
+        }
+        .cross-icon{
+            display: block;
+            width: 50px;
+            height: 50px;
+            margin: 20px;
+            background: url('путь/к/вашему/изображению.png') no-repeat center;
+            cursor: pointer;
+        }
+        .content {
+            margin: 20px;
+            text-align: center;
+            color: #cc0000;
+        }
+        .button{
+            display: block;
+            width: 200px;
+            height: 50px;
+            margin: 20px auto;
+            background-color: #cc0000;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #990000;
+        }
+    </style>
+    <title>Не зарегистрирован</title>
+</head>
+<body>
+    <div class="header">
+        <div class="cross-icon" onclick="closeWindow()"></div>
+        <h1>Вы не зарегистрированы</h1>
+    </div>
+    <div class="content">
+        <p>К сожалению, вы не зарегистрированы в нашей системе. Пожалуйста, авторизуйтесь или зарегистрируйтесь.</p>
+        <div class="button" onclick="goToLogin()">Авторизоваться</div>
+        <div class="button" onclick="goToRegister()">Зарегистрироваться</div>
+    </div>
+    <script>
+        function closeWindow(){
+            window.close();
+        }
+        function goToLogin(){
+            window.location.href = '/login_view';
+        }
+        function goToRegister(){
+            window.location.href = '/regi';
+        }
+    </script>
+</body>
+</html>
